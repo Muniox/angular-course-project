@@ -20,6 +20,7 @@ const appRoutes: Routes = [
     ],
   },
   { path: 'shopping-list', component: ShoppingListComponent },
+  //TODO: brak strony 404 :)
 ];
 
 @NgModule({
