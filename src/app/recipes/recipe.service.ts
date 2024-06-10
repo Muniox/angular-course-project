@@ -5,7 +5,7 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', // mamy tylko jedną instancję dla wszystkich
 })
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
