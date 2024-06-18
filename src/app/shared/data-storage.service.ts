@@ -9,7 +9,7 @@ import { map, tap } from 'rxjs';
 })
 export class DataStorageService {
   URL =
-    'https://ng-course-recipe-book-784e5-default-rtdb.europe-west1.firebasedatabase.app/';
+    'https://ng-course-recipe-book-711ea-default-rtdb.europe-west1.firebasedatabase.app/';
 
   constructor(private http: HttpClient, private recipeService: RecipeService) {}
 
