@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { catchError, throwError } from 'rxjs';
@@ -31,27 +31,47 @@ export class AuthService {
       )
       .pipe(
         catchError((errorRes) => {
-          let errorMessage = 'An unknown error occurred!';
-          if (!errorRes.error || !errorRes.error.error) {
-            return throwError(() => errorMessage);
-          }
-          switch (errorRes.error.error.message) {
-            case 'EMAIL_EXISTS':
-              errorMessage = 'This email exist already';
-          }
-          return throwError(() => errorMessage);
+          return this.handleError(errorRes);
+        })
+      );
+    //skrót ->
+    // .pipe(catchError(this.handleError))
+  }
+
+  login(email: string, password: string) {
+    return this.http
+      .post<AuthResponseData>(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
+        {
+          email,
+          password,
+          returnSecureToken: true,
+        }
+      )
+      .pipe(
+        catchError((errorRes) => {
+          return this.handleError(errorRes);
         })
       );
   }
 
-  login(email: string, password: string) {
-    return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
-      {
-        email,
-        password,
-        returnSecureToken: true,
-      }
-    );
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    console.log(errorRes);
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(() => errorMessage);
+    }
+    switch (errorRes.error.error.message) {
+      case 'EMAIL_EXISTS':
+        errorMessage = 'This email exist already';
+        break;
+      case 'USER_DISABLED':
+        errorMessage = 'User is disabled';
+        break;
+      case 'INVALID_LOGIN_CREDENTIALS':
+        errorMessage = 'Wrong email or password';
+        break;
+    }
+    return throwError(() => errorMessage);
   }
 }
