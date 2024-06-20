@@ -14,10 +14,11 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth.component';
-import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
-import {AuthInterceptor} from "./auth/auth.interceptor";
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { AlertComponent } from './shared/alert.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
     RecipeStartComponent,
     RecipeEditComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,9 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
