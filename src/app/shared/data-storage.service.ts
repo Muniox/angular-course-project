@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../recipes/recipe.model';
-import { map, tap } from 'rxjs';
+import {map, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,10 @@ export class DataStorageService {
   URL =
     'https://ng-course-recipe-book-711ea-default-rtdb.europe-west1.firebasedatabase.app/';
 
-  constructor(private http: HttpClient, private recipeService: RecipeService) {}
+  constructor(
+    private http: HttpClient,
+    private recipeService: RecipeService,
+  ) {}
 
   storeRecipes() {
     console.log(this.URL);
@@ -22,6 +25,7 @@ export class DataStorageService {
   }
 
   fetchRecipes() {
+
     return this.http.get<Recipe[]>(this.URL + 'recipes.json').pipe(
       map((recipes) => {
         return recipes.map((recipes) => {
@@ -34,6 +38,8 @@ export class DataStorageService {
       tap((recipes) => {
         this.recipeService.setRecipes(recipes);
       })
-    );
+    )
   }
+
+
 }
