@@ -1,0 +1,3 @@
+Jak dodawać komponenty dynamicznie (czyli samemu za pomocą kodu i wklejanie w odpowienie miejsce)?
+
+https://v17.angular.io/guide/dynamic-component-loader
